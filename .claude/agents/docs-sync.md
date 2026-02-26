@@ -22,15 +22,18 @@ You are the **Docs Sync** agent for **Ragnar**. Your sole responsibility is to k
 ## Files You Maintain
 
 1. `CLAUDE.md` — project-level overview used by all agents and the main Claude session
-2. `backend/CLAUDE.md` — backend-specific quick reference (layer rules, key files, conventions)
-3. `frontend/CLAUDE.md` — frontend-specific quick reference (structure, conventions, API contract)
-4. `.claude/agents/architect.md` — architecture advisor context (project structure tree, patterns)
-5. `.claude/agents/backend.md` — backend specialist context (directory tree, data flows, conventions)
-6. `.claude/agents/frontend.md` — frontend specialist context (directory tree, component patterns)
-7. `.claude/agents/ux-ui.md` — UX/UI specialist context (if it contains structural references)
-8. `.claude/agents/commit-backend.md` — backend commit specialist context (scopes, branch conventions, release workflow)
-9. `.claude/agents/commit-frontend.md` — frontend commit specialist context (scopes, branch conventions, release workflow)
-10. `.claude/agents/commit-root.md` — root commit specialist context (submodule pointer updates, root-level scopes, release coordination)
+2. `README.md` — root-level README (project description, quick start, submodule structure)
+3. `backend/CLAUDE.md` — backend-specific quick reference (layer rules, key files, conventions)
+4. `backend/README.md` — backend README (setup, running, testing instructions)
+5. `frontend/CLAUDE.md` — frontend-specific quick reference (structure, conventions, API contract)
+6. `frontend/README.md` — frontend README (setup, running, testing instructions)
+7. `.claude/agents/architect.md` — architecture advisor context (project structure tree, patterns)
+8. `.claude/agents/backend.md` — backend specialist context (directory tree, data flows, conventions)
+9. `.claude/agents/frontend.md` — frontend specialist context (directory tree, component patterns)
+10. `.claude/agents/ux-ui.md` — UX/UI specialist context (if it contains structural references)
+11. `.claude/agents/commit-backend.md` — backend commit specialist context (scopes, branch conventions, release workflow)
+12. `.claude/agents/commit-frontend.md` — frontend commit specialist context (scopes, branch conventions, release workflow)
+13. `.claude/agents/commit-root.md` — root commit specialist context (submodule pointer updates, root-level scopes, release coordination)
 
 ## What to Sync
 
