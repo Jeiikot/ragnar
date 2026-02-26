@@ -1,8 +1,16 @@
 # Feature: LLM/Embeddings provider system
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Backend — Infrastructure
+
+---
+
+## Planning
+
+- [x] Design — provider abstraction and auto-selection priority defined (see ADR-003)
+- [x] Implementation — Ollama, OpenAI, and HuggingFace adapters and selector built
+- [x] Tests — provider selection and construction tests passing
+- [x] Integration — used by ChatEngine and indexing pipeline
 
 ---
 

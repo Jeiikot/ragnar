@@ -1,8 +1,16 @@
 # ADR-006: Standardized API Response Envelope
 
-**Status:** ✅ done
 **Date:** 2026-02-26
 **Area:** API (Backend + Frontend)
+
+---
+
+## Planning
+
+- [x] Research — context and alternatives documented
+- [x] Decision — rationale written
+- [x] Applied — decision implemented in the codebase
+- [x] Validated — consequences confirmed in practice
 
 ---
 

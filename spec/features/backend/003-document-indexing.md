@@ -1,8 +1,16 @@
 # Feature: PDF document indexing
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Backend — Application + Infrastructure + API
+
+---
+
+## Planning
+
+- [x] Design — PDF and ZIP-of-PDFs data flow defined, differences from code indexing documented
+- [x] Implementation — PDF reader and document indexing use cases built
+- [x] Tests — unit and integration tests passing
+- [x] Integration — wired into `POST /api/v1/index/documents` endpoint
 
 ---
 

@@ -1,8 +1,16 @@
 # Feature: Multi-session management in sidebar
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Frontend — App
+
+---
+
+## Planning
+
+- [x] Design — session structure, state management, and sidebar layout defined
+- [x] Implementation — App.tsx session state, switch, create, and health check built
+- [x] Tests — App component unit tests and e2e session flow passing
+- [x] Integration — wraps ChatWindow and IndexForm with active session context
 
 ---
 

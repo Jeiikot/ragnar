@@ -1,8 +1,16 @@
 # Feature: File upload and index management form
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Frontend — Components
+
+---
+
+## Planning
+
+- [x] Design — indexing modes, component state machine, and UI sections defined
+- [x] Implementation — IndexForm component with progress timer built
+- [x] Tests — unit tests and e2e upload flow passing
+- [x] Integration — mounted in sidebar of App.tsx, calls all index API endpoints
 
 ---
 

@@ -1,65 +1,161 @@
 # Ragnar — Specs
 
-History of technical decisions and implementation plans for the Ragnar project.
+Conventions for documenting technical decisions and feature specifications.
 
 - `decisions/` — Architecture Decision Records (ADR): explain **why** each approach was chosen.
-- `features/` — Feature specifications: describe **what** was implemented or is planned.
+- `features/` — Feature specs: describe **what** is implemented or planned, with execution phases.
 
 ---
 
-## Architecture Decision Records
+## When to create each type
 
-| ID | Title | Status |
-|----|-------|--------|
-| [ADR-001](decisions/001-ddd-lite-architecture.md) | DDD-lite / Ports & Adapters Architecture | ✅ done |
-| [ADR-002](decisions/002-chromadb-vector-store.md) | ChromaDB as vector store | ✅ done |
-| [ADR-003](decisions/003-multi-provider-llm.md) | Multi-provider LLM system (auto-selection) | ✅ done |
-| [ADR-004](decisions/004-per-session-isolation.md) | Per-session isolation (multi-tenancy) | ✅ done |
-| [ADR-005](decisions/005-language-aware-chunking.md) | Language-aware chunking for source code | ✅ done |
+| Situation | Type |
+|-----------|------|
+| Choosing between technical alternatives and want to leave a record | ADR |
+| Implementing a new feature and need a plan | Feature spec |
+| A feature spans multiple layers (backend + frontend) | Feature spec under `features/` root or `features/<area>/` |
 
 ---
 
-## Features — Backend
+## Naming convention
 
-| File | Description | Status |
-|------|-------------|--------|
-| [backend/001-rag-pipeline.md](features/backend/001-rag-pipeline.md) | RAG pipeline with conversation memory (ChatEngine) | ✅ done |
-| [backend/002-code-indexing.md](features/backend/002-code-indexing.md) | Source code indexing from ZIP | ✅ done |
-| [backend/003-document-indexing.md](features/backend/003-document-indexing.md) | PDF document indexing | ✅ done |
-| [backend/004-provider-system.md](features/backend/004-provider-system.md) | LLM/embeddings provider system | ✅ done |
+```
+decisions/NNN-kebab-name.md    # e.g. 006-api-response-envelope.md
+features/<area>/NNN-name.md    # e.g. features/backend/005-api-response-envelope.md
+```
 
----
-
-## Features — Frontend
-
-| File | Description | Status |
-|------|-------------|--------|
-| [frontend/001-chat-interface.md](features/frontend/001-chat-interface.md) | Chat interface with history and source citations | ✅ done |
-| [frontend/002-index-form.md](features/frontend/002-index-form.md) | File upload and index management form | ✅ done |
-| [frontend/003-session-management.md](features/frontend/003-session-management.md) | Multi-session management in sidebar | ✅ done |
+The numeric prefix is sequential within its folder. Use three digits (`001`, `002`, …).
 
 ---
 
-## Configuration and Workflow
+## Phase status
 
-| File | Description | Status |
-|------|-------------|--------|
-| [features/git-workflow.md](features/git-workflow.md) | Git Flow + Conventional Commits + git-cliff | ✅ done |
+Each phase inside `## Planning` uses a Markdown checkbox:
+
+| Symbol | Meaning |
+|--------|---------|
+| `- [ ]` | Pending |
+| `- [x]` | Done |
+
+If a spec is discarded before implementation, add at the top of the file:
+
+```
+> **Cancelled:** <reason>
+```
 
 ---
 
-## How to use this folder
+## Template — ADR
 
-1. **New feature:** create `spec/features/<area>/<id>-<name>.md` with the plan before implementing.
-2. **Important technical decision:** create `spec/decisions/<id>-<name>.md` with context and alternatives.
-3. **When done:** update the status in this README to `✅ done`.
-4. **For Claude:** at the start of a session include "read spec/features/..." to provide context.
+```markdown
+# ADR-NNN: Decision title
 
-### Status legend
+**Date:** YYYY-MM-DD
+**Area:** Backend | Frontend | Backend + Frontend
 
-| Icon | Meaning |
-|------|---------|
-| `📋 planned` | Spec created, not yet implemented |
-| `🔄 in progress` | In active development |
-| `✅ done` | Implemented and committed |
-| `🚫 cancelled` | Discarded (reason in the file) |
+---
+
+## Planning
+
+- [ ] Research — context and alternatives documented
+- [ ] Decision — rationale written
+- [ ] Applied — decision implemented in the codebase
+- [ ] Validated — consequences confirmed in practice
+
+---
+
+## Context
+
+<Why this decision arose. What problem it solves.>
+
+## Decision
+
+<What was decided and why.>
+
+## Alternatives considered
+
+| Option | Reason rejected |
+|--------|----------------|
+| ...    | ...            |
+
+## Consequences
+
+**Positive:** …
+**Negative / trade-offs:** …
+
+## Key files
+
+| File | Role |
+|------|------|
+| ...  | ...  |
+```
+
+---
+
+## Template — Feature spec
+
+```markdown
+# Feature: Feature name
+
+**Date:** YYYY-MM-DD
+**Area:** Backend | Frontend | Backend + Frontend
+
+---
+
+## Planning
+
+- [ ] Design — spec written and acceptance criteria defined
+- [ ] Implementation — code written
+- [ ] Tests — unit + integration passing
+- [ ] Integration — wired into the rest of the system
+
+---
+
+## Description
+
+<What this feature does. Capabilities it enables.>
+
+## Involved files
+
+| File | Role |
+|------|------|
+| ...  | ...  |
+
+## Implemented behavior
+
+<Architecture details, data flows, API contracts, schemas, etc.>
+
+## Related tests
+
+- `tests/unit/...`
+- `tests/integration/...`
+```
+
+---
+
+## Referencing a spec
+
+From commits or PRs:
+
+```
+feat(api): add response envelope
+
+See spec/features/backend/005-api-response-envelope.md
+See spec/decisions/006-api-response-envelope.md
+```
+
+From other specs (relative Markdown link):
+
+```markdown
+See [ADR-006](../../decisions/006-api-response-envelope.md) for the architectural rationale.
+```
+
+---
+
+## For Claude
+
+At the start of an implementation session, provide the relevant spec:
+
+```
+Read spec/features/backend/005-api-response-envelope.md
+```

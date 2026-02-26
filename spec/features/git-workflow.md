@@ -1,8 +1,16 @@
 # Feature: Git Flow + Conventional Commits + git-cliff
 
-**Status:** ✅ done
 **Date:** 2026-02-26
 **Area:** Backend + Frontend — Workflow
+
+---
+
+## Planning
+
+- [x] Design — Git Flow branches, Conventional Commits types/scopes, and SemVer rules defined
+- [x] Implementation — git-cliff config and commit-backend/commit-frontend sub-agents set up
+- [x] Applied — initial commits for backend (17) and frontend (11) created following conventions
+- [x] Validated — release workflow tested end-to-end on both sub-projects
 
 ---
 

@@ -1,8 +1,16 @@
 # Feature: Chat interface with history and source citations
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Frontend — Components + Hooks
+
+---
+
+## Planning
+
+- [x] Design — hook interface, component sections, and backend contract defined
+- [x] Implementation — useChat hook, ChatWindow, and MessageBubble built
+- [x] Tests — unit tests for components and integration tests for hook passing
+- [x] Integration — mounted in App.tsx per active session
 
 ---
 
