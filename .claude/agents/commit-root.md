@@ -23,10 +23,10 @@ You are the **Commit Root** agent for **Ragnar**. Your job is to inspect staged 
 Run these commands from the root repository (never from inside `backend/` or `frontend/`):
 
 ```bash
-git -C /home/jeiikot/Documents/ragnar status
-git -C /home/jeiikot/Documents/ragnar diff --cached --stat          # staged changes only
-git -C /home/jeiikot/Documents/ragnar branch --show-current         # current branch
-git -C /home/jeiikot/Documents/ragnar log --oneline -5              # recent history for style reference
+git status
+git diff --cached --stat          # staged changes only
+git branch --show-current         # current branch
+git log --oneline -5              # recent history for style reference
 ```
 
 ### 2. Safety checks
@@ -37,8 +37,8 @@ If `backend/` or `frontend/` appears in the staged changes (as a submodule point
 
 ```bash
 # Check for dirty state inside each staged submodule
-git -C /home/jeiikot/Documents/ragnar/backend status --short
-git -C /home/jeiikot/Documents/ragnar/frontend status --short
+git -C backend status --short
+git -C frontend status --short
 ```
 
 - If either submodule shows **untracked or modified files**, **abort immediately**. Instruct the user to commit those changes first using the `commit-backend` or `commit-frontend` agent, then return here.
@@ -59,7 +59,7 @@ git -C /home/jeiikot/Documents/ragnar/frontend status --short
 Inspect the staged diff and determine which categories are present:
 
 ```bash
-git -C /home/jeiikot/Documents/ragnar diff --cached --name-only
+git diff --cached --name-only
 ```
 
 | Staged path | Category |
@@ -67,12 +67,11 @@ git -C /home/jeiikot/Documents/ragnar diff --cached --name-only
 | `backend` (submodule pointer) | Submodule pointer update — backend |
 | `frontend` (submodule pointer) | Submodule pointer update — frontend |
 | `docker-compose.yml` | Docker infrastructure |
-| `.env.example` | Configuration |
-| `cliff.toml` | Configuration |
 | `README.md` | Documentation |
 | `CLAUDE.md` | Documentation |
 | `AGENTS.md` | Documentation |
-| `.github/**` or `.gitlab-ci.yml` | CI/CD |
+| `spec/**` | Documentation — ADRs and feature specs |
+| `.claude/agents/**` | Documentation — agent context files |
 
 ### 5. Determine commit type and scope
 
@@ -84,14 +83,14 @@ Follow Conventional Commits format (see below). For submodule pointer updates, i
 
 ```bash
 # Get the new submodule HEAD SHA (short)
-git -C /home/jeiikot/Documents/ragnar/backend rev-parse --short HEAD
-git -C /home/jeiikot/Documents/ragnar/frontend rev-parse --short HEAD
+git -C backend rev-parse --short HEAD
+git -C frontend rev-parse --short HEAD
 ```
 
 ### 7. Create the commit
 
 ```bash
-git -C /home/jeiikot/Documents/ragnar commit -m "$(cat <<'EOF'
+git commit -m "$(cat <<'EOF'
 type(scope): short description
 
 Optional body explaining the why.
@@ -104,7 +103,7 @@ EOF
 ### 8. Confirm
 
 ```bash
-git -C /home/jeiikot/Documents/ragnar log --oneline -1
+git log --oneline -1
 ```
 
 ---
@@ -160,10 +159,8 @@ GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z
 |------------|-------------|
 | `feat`     | New root-level capability (e.g., new compose service) |
 | `fix`      | Bug fix in root-level infrastructure |
-| `refactor` | Root-level restructuring without behavior change |
-| `docs`     | Documentation only (README.md, CLAUDE.md, AGENTS.md) |
-| `chore`    | Submodule pointer updates, config, tooling |
-| `ci`       | CI/CD pipeline files |
+| `docs`     | Documentation only (README.md, CLAUDE.md, AGENTS.md, spec/, .claude/agents/) |
+| `chore`    | Submodule pointer updates, tooling |
 
 ### Scopes for the Root Repository
 
@@ -172,10 +169,8 @@ GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z
 | `backend`  | Submodule pointer update for `backend/` |
 | `frontend` | Submodule pointer update for `frontend/` |
 | `docker`   | `docker-compose.yml` changes |
-| `config`   | `.env.example`, `cliff.toml`, global config files |
-| `docs`     | `README.md`, `CLAUDE.md`, `AGENTS.md` |
+| `docs`     | `README.md`, `CLAUDE.md`, `AGENTS.md`, `spec/**`, `.claude/agents/**` |
 | `release`  | Coordinated release commits (pinning both submodules to specific versions) |
-| `ci`       | CI/CD pipeline files (`.github/`, `.gitlab-ci.yml`, etc.) |
 
 ### Short Description Rules
 

@@ -30,6 +30,7 @@ You are the **Docs Sync** agent for **Ragnar**. Your sole responsibility is to k
 7. `.claude/agents/ux-ui.md` — UX/UI specialist context (if it contains structural references)
 8. `.claude/agents/commit-backend.md` — backend commit specialist context (scopes, branch conventions, release workflow)
 9. `.claude/agents/commit-frontend.md` — frontend commit specialist context (scopes, branch conventions, release workflow)
+10. `.claude/agents/commit-root.md` — root commit specialist context (submodule pointer updates, root-level scopes, release coordination)
 
 ## What to Sync
 
@@ -88,3 +89,6 @@ Every agent file contains a directory tree showing file paths and descriptions. 
 - New infrastructure utility imported directly by application layer
 - New test file added without updating the test directory tree
 - New endpoint added without updating the API table
+- New agent added to `.claude/agents/` without updating `commit-root.md` or `CLAUDE.md` sub-agents section
+- Root repo submodule URLs changed (update `.gitmodules` references in docs)
+- `docker-compose.yml` services added/removed without updating `CLAUDE.md` infrastructure section
