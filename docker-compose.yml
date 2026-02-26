@@ -1,0 +1,76 @@
+name: ragnar
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  ollama-init:
+    image: ollama/ollama:latest
+    depends_on:
+      - ollama
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        until ollama list >/dev/null 2>&1; do sleep 1; done
+        ollama pull "$${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}"
+        ollama pull "$${OLLAMA_CHAT_MODEL:-qwen2.5:7b-instruct}"
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+      - "5678:5678"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - chroma_data:/app/chroma_data
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      CHROMA_PERSIST_DIR: /app/chroma_data
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL_DOCKER:-http://ollama:11434}
+    depends_on:
+      ollama:
+        condition: service_started
+      ollama-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    command: ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8765", "--reload"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-}
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+  ollama_data:

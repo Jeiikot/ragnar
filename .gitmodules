@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/Jeiikot/ragnar-backend.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Jeiikot/ragnar-frontend.git
