@@ -69,6 +69,7 @@ The backend follows **DDD-lite (Ports & Adapters)**:
 
 ## Key Conventions
 
+- **Never add `Co-Authored-By: Claude` to commit messages** in any of the three repos
 - All Python files: `from __future__ import annotations`
 - Domain ports: `typing.Protocol` (never ABC)
 - Domain entities: `@dataclass(frozen=True)`
