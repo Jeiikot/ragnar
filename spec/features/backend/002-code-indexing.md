@@ -1,8 +1,16 @@
 # Feature: Source code indexing from ZIP
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Backend — Application + Infrastructure + API
+
+---
+
+## Planning
+
+- [x] Design — data flow, port protocols, and security constraints defined
+- [x] Implementation — ZIP extraction, file discovery, chunking, and ChromaDB storage built
+- [x] Tests — unit tests with port mocks and integration tests with real ChromaDB passing
+- [x] Integration — wired into `POST /api/v1/index/code` endpoint
 
 ---
 

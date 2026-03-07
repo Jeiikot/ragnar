@@ -94,8 +94,6 @@ git commit -m "$(cat <<'EOF'
 type(scope): short description
 
 Optional body explaining the why.
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF
 )"
 ```
@@ -121,17 +119,13 @@ git flow release start X.Y.Z
 git submodule update --remote backend   # or: git -C backend checkout vX.Y.Z
 git submodule update --remote frontend  # or: git -C frontend checkout vX.Y.Z
 git add backend frontend
-git commit -m "chore(release): pin backend vX.Y.Z + frontend vX.Y.Z
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+git commit -m "chore(release): pin backend vX.Y.Z + frontend vX.Y.Z"
 
 # 3. Generate / update CHANGELOG.md with git-cliff
 #    cliff.toml must filter out chore(backend) and chore(frontend) submodule update commits
 git-cliff --config cliff.toml -o CHANGELOG.md
 git add CHANGELOG.md
-git commit -m "docs: update changelog for vX.Y.Z
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+git commit -m "docs: update changelog for vX.Y.Z"
 
 # 4. Finish release (merges to main, creates tag vX.Y.Z, back-merges to develop)
 GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z

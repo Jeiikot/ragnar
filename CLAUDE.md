@@ -23,6 +23,9 @@ ragnar/
 ├── frontend/         # React SPA
 │   ├── src/          # Components, hooks, API client
 │   └── tests/        # unit/, integration/, e2e/
+├── .claude/
+│   ├── agents/       # 8 specialized subagents
+│   └── skills/       # 6 reusable skills (auto-loaded on demand)
 └── docker-compose.yml
 ```
 
@@ -64,18 +67,17 @@ npm run build                             # typecheck + build
 The backend follows **DDD-lite (Ports & Adapters)**:
 - **Domain** defines `Protocol`-based ports and frozen dataclass entities
 - **Infrastructure** provides concrete adapters, wired via `functools.partial` in `adapters.py`
-- **Application** orchestrates use cases through ports; imports only from `domain` and `shared` — port bundles are injected as arguments, never constructed inside services
-- **API** is the composition root: `api/dependencies.py` builds port bundles via `build_indexing_ports`/`build_document_ports` from `infrastructure.indexing.adapters` and injects them via `Depends()`; routers delegate to application services
+- **Application** orchestrates use cases through ports; imports only from `domain` and `shared`
+- **API** is the composition root: `api/dependencies.py` builds port bundles and injects them via `Depends()`
+
+See the `ddd-architecture` skill for full layer rules and data flows.
 
 ## Key Conventions
 
-- All Python files: `from __future__ import annotations`
-- Domain ports: `typing.Protocol` (never ABC)
-- Domain entities: `@dataclass(frozen=True)`
-- Request schemas: `ConfigDict(extra="forbid")`
-- Python line length: 99 (ruff)
-- Frontend: function components only, Tailwind utilities in JSX, UI text in Spanish
+- **Never add `Co-Authored-By: Claude` to commit messages** in any of the three repos
 - API schemas mirror between `backend/api/schemas/` and `frontend/src/api/client.ts`
+
+See skills for detailed conventions: `python-conventions` (backend), `react-conventions` + `design-system` (frontend), `conventional-commits` + `git-flow` (version control).
 
 ## API Endpoints
 
@@ -90,18 +92,32 @@ The backend follows **DDD-lite (Ports & Adapters)**:
 
 ## Version Control
 
-Backend and frontend each have their own independent git repository with Git Flow initialized (branches: `main` and `develop`). Changelog generation is handled by `git-cliff` using a `cliff.toml` config in each sub-project root; the generated `CHANGELOG.md` is updated during release branches.
+Backend and frontend each have their own independent git repository with Git Flow. Changelog generation handled by `git-cliff` using `cliff.toml` in each sub-project root.
 
 - `backend/` — git repo with Git Flow (`main`, `develop`)
 - `frontend/` — git repo with Git Flow (`main`, `develop`)
 
 ## Sub-Agents
 
-Specialized agents are defined in `.claude/agents/`:
+Specialized agents in `.claude/agents/`:
 - **architect** — Read-only architecture advisor (no file modifications)
 - **backend** — Python/FastAPI specialist (reads and writes backend code)
 - **frontend** — React/TypeScript specialist (reads and writes frontend code)
 - **ux-ui** — UX/UI design specialist (accessibility, layout, visual hierarchy)
-- **docs-sync** — Keeps agent context files and CLAUDE.md accurate after structural changes; invoke after renaming/moving files, refactoring layers, adding endpoints, or restructuring modules
-- **commit-backend** — Git commit specialist for backend; runs ruff + mypy, creates Conventional Commits following Git Flow
-- **commit-frontend** — Git commit specialist for frontend; runs ESLint + TypeScript typecheck, creates Conventional Commits following Git Flow
+- **docs-sync** — Keeps agent context files and CLAUDE.md accurate after structural changes
+- **commit-backend** — Git commit specialist for backend; runs ruff + mypy, creates Conventional Commits
+- **commit-frontend** — Git commit specialist for frontend; runs ESLint + TypeScript typecheck
+- **commit-root** — Git commit specialist for root repo; handles submodule pointer updates
+
+## Skills
+
+Reusable skills in `.claude/skills/` — auto-loaded when relevant to your request:
+
+| Skill | When it activates |
+|-------|------------------|
+| `python-conventions` | Writing or reviewing Python/backend code |
+| `ddd-architecture` | Discussing architecture, adding features, reviewing layer structure |
+| `react-conventions` | Writing or reviewing React/TypeScript/frontend code |
+| `design-system` | Designing or reviewing UI components, layout, accessibility |
+| `conventional-commits` | Creating commits or reviewing commit messages |
+| `git-flow` | Creating branches, merging, or discussing release workflow |

@@ -1,8 +1,16 @@
 # Feature: RAG pipeline with conversation memory (ChatEngine)
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Backend — Infrastructure + API
+
+---
+
+## Planning
+
+- [x] Design — LCEL pipeline architecture and endpoint contract defined
+- [x] Implementation — ChatEngine, retriever, and provider integration built
+- [x] Tests — unit tests with mocks and e2e chat flows passing
+- [x] Integration — wired into API via dependency injection singleton
 
 ---
 

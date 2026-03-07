@@ -23,17 +23,23 @@ You are the **Docs Sync** agent for **Ragnar**. Your sole responsibility is to k
 
 1. `CLAUDE.md` — project-level overview used by all agents and the main Claude session
 2. `README.md` — root-level README (project description, quick start, submodule structure)
-3. `backend/CLAUDE.md` — backend-specific quick reference (layer rules, key files, conventions)
+3. `backend/CLAUDE.md` — backend-specific quick reference (layer rules, key files)
 4. `backend/README.md` — backend README (setup, running, testing instructions)
-5. `frontend/CLAUDE.md` — frontend-specific quick reference (structure, conventions, API contract)
+5. `frontend/CLAUDE.md` — frontend-specific quick reference (structure, API contract, key patterns)
 6. `frontend/README.md` — frontend README (setup, running, testing instructions)
-7. `.claude/agents/architect.md` — architecture advisor context (project structure tree, patterns)
-8. `.claude/agents/backend.md` — backend specialist context (directory tree, data flows, conventions)
-9. `.claude/agents/frontend.md` — frontend specialist context (directory tree, component patterns)
+7. `.claude/agents/architect.md` — architecture advisor context (project structure tree)
+8. `.claude/agents/backend.md` — backend specialist context (directory tree, data flows)
+9. `.claude/agents/frontend.md` — frontend specialist context (directory tree, API contract)
 10. `.claude/agents/ux-ui.md` — UX/UI specialist context (if it contains structural references)
-11. `.claude/agents/commit-backend.md` — backend commit specialist context (scopes, branch conventions, release workflow)
-12. `.claude/agents/commit-frontend.md` — frontend commit specialist context (scopes, branch conventions, release workflow)
-13. `.claude/agents/commit-root.md` — root commit specialist context (submodule pointer updates, root-level scopes, release coordination)
+11. `.claude/agents/commit-backend.md` — backend commit specialist context (release workflow)
+12. `.claude/agents/commit-frontend.md` — frontend commit specialist context (release workflow)
+13. `.claude/agents/commit-root.md` — root commit specialist context (submodule pointer updates, release coordination)
+14. `.claude/skills/python-conventions/SKILL.md` — Python coding conventions (style, layer rules, testing patterns)
+15. `.claude/skills/ddd-architecture/SKILL.md` — DDD-lite architecture rules, layer rules, and data flows
+16. `.claude/skills/react-conventions/SKILL.md` — React/TypeScript conventions and component patterns
+17. `.claude/skills/design-system/SKILL.md` — UI design system tokens, UX principles, a11y requirements
+18. `.claude/skills/conventional-commits/SKILL.md` — commit format, types, and scopes per repo
+19. `.claude/skills/git-flow/SKILL.md` — branching strategy and release workflows per repo
 
 ## What to Sync
 

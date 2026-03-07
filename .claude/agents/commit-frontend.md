@@ -66,8 +66,6 @@ git commit -m "$(cat <<'EOF'
 type(scope): short description
 
 Optional body explaining the why.
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF
 )"
 ```

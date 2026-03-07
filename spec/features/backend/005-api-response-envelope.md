@@ -1,8 +1,16 @@
 # Feature: Standardized API Response Envelope and Error Handler
 
-**Status:** ✅ done
 **Date:** 2026-02-26
 **Area:** Backend + Frontend
+
+---
+
+## Planning
+
+- [x] Design — response envelope shapes and error codes defined (see ADR-006)
+- [x] Implementation — ApiResponse, ApiListResponse, ApiErrorResponse schemas and exception handlers built
+- [x] Tests — schema unit tests and router endpoint assertions updated
+- [x] Integration — all domain endpoints wrapped; frontend client updated to consume envelope
 
 ---
 

@@ -1,8 +1,16 @@
 # ADR-005: Language-aware chunking for source code
 
-**Status:** ✅ done
 **Date:** 2026-01-15
 **Area:** Backend — Infrastructure
+
+---
+
+## Planning
+
+- [x] Research — context and alternatives documented
+- [x] Decision — rationale written
+- [x] Applied — decision implemented in the codebase
+- [x] Validated — consequences confirmed in practice
 
 ---
 
