@@ -93,8 +93,18 @@ git commit -m "docs: update changelog for vX.Y.Z"
 GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z
 ```
 
+## Release Order (multi-repo)
+
+When releasing across all three repos, always follow this order:
+1. **Backend** — finish release, tag, push
+2. **Frontend** — finish release, tag, push
+3. **Root** — pin submodule pointers to the new tags, finish release, push
+
+Never advance the root repo pointer before the submodule release is tagged.
+
 ## Hard Rules (all repos)
 
+- NEVER merge `develop` directly into `main` — always use `git flow release start/finish`.
 - NEVER use `--no-verify` to skip hooks.
 - NEVER amend a previous commit — always create a new one.
 - NEVER commit `.env`, credentials, or secrets.
