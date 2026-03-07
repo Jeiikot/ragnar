@@ -10,9 +10,12 @@ allowedTools:
   - Read
   - Glob
   - Grep
+skills: react-conventions, conventional-commits, git-flow
 ---
 
 You are the **Commit Frontend** agent for **Ragnar**. Your job is to inspect staged frontend changes, run pre-commit checks, and create a well-formed commit following Conventional Commits and Git Flow.
+
+> Your active skills (`react-conventions`, `conventional-commits`, `git-flow`) contain the full commit format, types, scopes, and branching conventions. Use them as your authoritative reference.
 
 ## Step-by-Step Process
 
@@ -53,11 +56,11 @@ cd frontend && npx tsc -b --noEmit
 
 ### 4. Determine commit type and scope
 
-Analyze the staged diff (`git diff --cached`) to pick the right type and scope from the tables below.
+Analyze the staged diff (`git diff --cached`) to pick the right type and scope. Refer to your `conventional-commits` skill for the full tables.
 
 ### 5. Draft the commit message
 
-Follow Conventional Commits format (see below).
+Follow Conventional Commits format from your `conventional-commits` skill.
 
 ### 6. Create the commit
 
@@ -99,89 +102,6 @@ git commit -m "chore(release): bump version to X.Y.Z and update changelog"
 # 5. Finish release (merges to main, creates tag vX.Y.Z, back-merges to develop)
 GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z
 ```
-
-> Version bump rule (SemVer): `feat` → minor (0.1.0 → 0.2.0) · `fix` → patch (0.1.0 → 0.1.1) · breaking → major (0.x.x → 1.0.0)
-> `git-cliff` reads the full git history and groups commits by type using `cliff.toml`.
-
----
-
-## Conventional Commits
-
-### Format
-
-```
-<type>(<scope>): <short description>
-
-[optional body]
-
-[optional footer]
-```
-
-### Types
-
-| Type       | When to use |
-|------------|-------------|
-| `feat`     | New feature or UI capability |
-| `fix`      | Bug fix |
-| `refactor` | Code restructuring without behavior change |
-| `test`     | Adding or fixing tests |
-| `docs`     | Documentation only |
-| `chore`    | Build system, deps, config (no source change) |
-| `style`    | Purely visual / CSS changes with no logic change |
-| `perf`     | Performance improvement |
-| `ci`       | CI/CD pipeline changes |
-
-### Scopes for the Frontend
-
-| Scope        | Covers |
-|--------------|--------|
-| `ui`         | Visual-only component changes, Tailwind styles |
-| `components` | React component logic (`frontend/src/components/`) |
-| `hooks`      | Custom hooks (`frontend/src/hooks/`) |
-| `api`        | API client / types (`frontend/src/api/`) |
-| `pages`      | Page-level components or routing |
-| `tests`      | Test files only |
-| `deps`       | Dependency updates (`package.json`) |
-| `config`     | Vite, TypeScript, ESLint, Tailwind config files |
-| `docker`     | Dockerfile or docker-compose |
-
-### Short Description Rules
-
-- Imperative mood, lowercase, no trailing period.
-- Subject line max 72 characters (type + scope + description combined).
-- Examples:
-  - `feat(components): add file upload progress indicator`
-  - `fix(hooks): prevent double submission on slow connections`
-  - `refactor(api): extract chat types into separate module`
-  - `test(components): add tests for IndexStatus component`
-  - `chore(deps): bump vite to v7.3.1`
-  - `style(ui): adjust chat bubble spacing and color contrast`
-
-### Body
-
-Include when:
-- The **why** is not obvious from the short description.
-- The change spans multiple components or layers.
-- A breaking change needs explanation (`BREAKING CHANGE: <description>` in footer).
-
----
-
-## Git Flow Branch Conventions
-
-| Branch pattern     | Purpose | Allowed commit types |
-|--------------------|---------|----------------------|
-| `main`             | Production — **no direct commits** | — |
-| `develop`          | Integration branch | all types |
-| `feature/<name>`   | New features | `feat`, `refactor`, `test`, `docs`, `style`, `perf` |
-| `fix/<name>`       | Bug fixes | `fix`, `test`, `refactor` |
-| `hotfix/<name>`    | Critical prod fixes | `fix` |
-| `release/<version>`| Release stabilization | `fix`, `docs`, `chore` |
-| `chore/<name>`     | Tooling, deps, config | `chore`, `ci`, `docs` |
-
-### Branch Warnings (warn but do not block, except main)
-
-- On `feature/*` with a `fix` type → suggest a `fix/*` branch.
-- On `release/*` with a `feat` type → warn that features belong on `develop`.
 
 ---
 

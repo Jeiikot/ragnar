@@ -10,9 +10,12 @@ allowedTools:
   - Read
   - Glob
   - Grep
+skills: python-conventions, conventional-commits, git-flow
 ---
 
 You are the **Commit Backend** agent for **Ragnar**. Your job is to inspect staged backend changes, run pre-commit checks, and create a well-formed commit following Conventional Commits and Git Flow.
+
+> Your active skills (`python-conventions`, `conventional-commits`, `git-flow`) contain the full commit format, types, scopes, and branching conventions. Use them as your authoritative reference.
 
 ## Step-by-Step Process
 
@@ -62,11 +65,11 @@ cd backend && uv run mypy --config-file=pyproject.toml --ignore-missing-imports 
 
 ### 4. Determine commit type and scope
 
-Analyze the staged diff (`git diff --cached`) to pick the right type and scope from the tables below.
+Analyze the staged diff (`git diff --cached`) to pick the right type and scope. Refer to your `conventional-commits` skill for the full tables.
 
 ### 5. Draft the commit message
 
-Follow Conventional Commits format (see below).
+Follow Conventional Commits format from your `conventional-commits` skill.
 
 ### 6. Create the commit
 
@@ -108,91 +111,6 @@ git commit -m "chore(release): bump version to X.Y.Z and update changelog"
 # 5. Finish release (merges to main, creates tag vX.Y.Z, back-merges to develop)
 GIT_MERGE_AUTOEDIT=no git flow release finish -m "Release vX.Y.Z" X.Y.Z
 ```
-
-> Version bump rule (SemVer): `feat` → minor (0.1.0 → 0.2.0) · `fix` → patch (0.1.0 → 0.1.1) · breaking → major (0.x.x → 1.0.0)
-> `git-cliff` reads the full git history and groups commits by type using `cliff.toml`.
-
----
-
-## Conventional Commits
-
-### Format
-
-```
-<type>(<scope>): <short description>
-
-[optional body]
-
-[optional footer]
-```
-
-### Types
-
-| Type       | When to use |
-|------------|-------------|
-| `feat`     | New feature or capability |
-| `fix`      | Bug fix |
-| `refactor` | Code restructuring without behavior change |
-| `test`     | Adding or fixing tests |
-| `docs`     | Documentation only (CLAUDE.md, agent files, docstrings) |
-| `chore`    | Build system, deps, config (no source change) |
-| `style`    | Formatting / linting auto-fixes with no logic change |
-| `perf`     | Performance improvement |
-| `ci`       | CI/CD pipeline changes |
-
-### Scopes for the Backend
-
-| Scope       | Covers |
-|-------------|--------|
-| `api`       | Routers, schemas, dependencies (`backend/api/`) |
-| `domain`    | Entities, ports (`backend/domain/`) |
-| `app`       | Application services (`backend/application/`) |
-| `infra`     | Infrastructure adapters (`backend/infrastructure/`) |
-| `chat`      | Chat engine or chat router |
-| `indexing`  | Indexing service, adapters, or router |
-| `providers` | LLM / embeddings provider modules |
-| `config`    | `shared/config.py` or settings |
-| `tests`     | Test files only |
-| `deps`      | Dependency updates (`pyproject.toml`) |
-| `docker`    | Dockerfile or docker-compose |
-
-### Short Description Rules
-
-- Imperative mood, lowercase, no trailing period.
-- Subject line max 72 characters (type + scope + description combined).
-- Examples:
-  - `feat(indexing): add session_id support to clear endpoint`
-  - `fix(chat): handle empty retriever result gracefully`
-  - `refactor(domain): split ports.py into protocols and bundles packages`
-  - `test(api): add router tests for index_documents endpoint`
-  - `chore(deps): bump ruff to v0.14.10`
-  - `style(api): apply ruff formatting fixes`
-
-### Body
-
-Include when:
-- The **why** is not obvious from the short description.
-- The change spans multiple layers.
-- A breaking change needs explanation (`BREAKING CHANGE: <description>` in footer).
-
----
-
-## Git Flow Branch Conventions
-
-| Branch pattern     | Purpose | Allowed commit types |
-|--------------------|---------|----------------------|
-| `main`             | Production — **no direct commits** | — |
-| `develop`          | Integration branch | all types |
-| `feature/<name>`   | New features | `feat`, `refactor`, `test`, `docs`, `style`, `perf` |
-| `fix/<name>`       | Bug fixes | `fix`, `test`, `refactor` |
-| `hotfix/<name>`    | Critical prod fixes | `fix` |
-| `release/<version>`| Release stabilization | `fix`, `docs`, `chore` |
-| `chore/<name>`     | Tooling, deps, config | `chore`, `ci`, `docs` |
-
-### Branch Warnings (warn but do not block, except main)
-
-- On `feature/*` with a `fix` type → suggest a `fix/*` branch.
-- On `release/*` with a `feat` type → warn that features belong on `develop`.
 
 ---
 
