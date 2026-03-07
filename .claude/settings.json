@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git log:*)",
+      "Bash(git remote add:*)",
+      "Read(//home/jeiikot/**)",
+      "Read(//home/jeiikot/.config/**)",
+      "Bash(python3:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(grep:*)",
+      "Bash(git stash:*)"
+    ]
+  }
+}
